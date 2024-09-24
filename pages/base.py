@@ -24,10 +24,12 @@ class BasePage(Screen):
         main_layout.add_widget(button_container)
 
         self.create_button("Удаление дубликатов", "duplicates", button_container)
+        self.create_button("Фильтрация 2 пачек данных", "dbldata", button_container)
         self.create_button("Удаление и фильтрация по префиксам", "prefix", button_container)
         self.create_button("Настройка номеров для Aster", "aster", button_container)
         self.create_button("Форматирование списаний по номерам", "num", button_container)
         self.create_button("Скрипты для запросов в MYSQL", "mysql", button_container)
+        self.create_button("Переработка прайсов Би", "gprices", button_container)
         self.create_button("Скрипт в разработке", "script", button_container)
         self.create_button("Об авторе", "kosou", button_container)
 

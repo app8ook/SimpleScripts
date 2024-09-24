@@ -25,12 +25,12 @@ class PrefixPage(Screen):
         self.current_script = "prefiltr"
 
     def prefiltr(self, input_text, prefix):
-        values = [int(value) for value in input_text.splitlines() if value.strip()]
-        original_count = len(values)
-        filtered_values = [value for value in values if any(str(value).startswith(prefix) for prefix in [prefix])]
-        filtered_count = len(filtered_values)
+        lines = [line for line in input_text.splitlines() if line.strip()]
+        original_count = len(lines)
+        filtered_lines = [line for line in lines if line.startswith(prefix)]
+        filtered_count = len(filtered_lines)
         removed_count = original_count - filtered_count
-        output_text = "\n".join(map(str, filtered_values))
+        output_text = "\n".join(filtered_lines)
         output_text += f"\n\nКоличество не попавших под фильтр строк: {removed_count}"
         output_text += f"\nКоличество отфильтрованных строк с указанным префиксом: {filtered_count}"
         return output_text

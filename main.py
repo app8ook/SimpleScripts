@@ -10,7 +10,7 @@ class MainApp(MDApp):
         super().__init__(**kwargs)
         self.theme_cls.theme_style = "Dark"
         self.icon = os.path.join(os.path.dirname(__file__), "Kosou.png")
-        self.title = "Simple Scripts 0.1"
+        self.title = "Simple Scripts 0.2"
 
     def build(self):
         # Установка размера окна
@@ -37,17 +37,22 @@ class MainApp(MDApp):
 
     def load_pages(self):
         from pages.duplicate import DuplicatePage
+        from pages.dbldata import DbldataPage
         from pages.prefix import PrefixPage
         from pages.aster import AsterPage
         from pages.num import NumPage
         from pages.mysql import MysqlPage
+        from pages.gprices import GPricesPage
         from pages.script import ScriptPage
         from pages.kosou import KosouPage
+        
         self.screen_manager.add_widget(DuplicatePage(name="duplicates"))
+        self.screen_manager.add_widget(DbldataPage(name="dbldata"))
         self.screen_manager.add_widget(PrefixPage(name="prefix"))
         self.screen_manager.add_widget(AsterPage(name="aster"))
         self.screen_manager.add_widget(NumPage(name="num"))
         self.screen_manager.add_widget(MysqlPage(name="mysql"))
+        self.screen_manager.add_widget(GPricesPage(name="gprices"))
         self.screen_manager.add_widget(ScriptPage(name="script"))
         self.screen_manager.add_widget(KosouPage(name="kosou"))
 

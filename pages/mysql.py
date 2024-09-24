@@ -330,113 +330,134 @@ class MysqlPage(Screen):
         button_layout.add_widget(self.del_button)
 
     def generate_query(self, instance):
-        input_text = self.numbers_field.text.strip()
-        if not input_text:
-            return
-        self.scripts[self.current_script]["generate_function"]()
+        try:
+            input_text = self.numbers_field.text.strip()
+            if not input_text:
+                return
+            self.scripts[self.current_script]["generate_function"]()
+        except Exception as e:
+            self.output_field.text = f"Ошибка: {str(e)}"
 
     def generate_ivr_query(self):
-        input_text = self.numbers_field.text.strip()
-        if not input_text:
-            return
-        context = self.context_field.text
-        client = self.client_field.text
-        ivr_file = self.ivr_field.text
-        numbers = self.numbers_field.text.splitlines()
+        try:
+            input_text = self.numbers_field.text.strip()
+            if not input_text:
+                return
+            context = self.context_field.text
+            client = self.client_field.text
+            ivr_file = self.ivr_field.text
+            numbers = self.numbers_field.text.splitlines()
 
-        res = "INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
-        for number in numbers:
-            res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, incomming for {client}'),"
-            res += f"('{context}', '{number.strip()}', '2', 'Answer', ''),"
-            res += f"('{context}', '{number.strip()}', '3', 'Wait', '1'),"
-            res += f"('{context}', '{number.strip()}', '4', 'Playback', '{ivr_file},skip'),"
-            res += f"('{context}', '{number.strip()}', '5', 'Hangup', ''),"
-        res = res[:-1] + ';'
-        self.output_field.text = res
+            res = "INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
+            for number in numbers:
+                res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, incomming for {client}'),"
+                res += f"('{context}', '{number.strip()}', '2', 'Answer', ''),"
+                res += f"('{context}', '{number.strip()}', '3', 'Wait', '1'),"
+                res += f"('{context}', '{number.strip()}', '4', 'Playback', '{ivr_file},skip'),"
+                res += f"('{context}', '{number.strip()}', '5', 'Hangup', ''),"
+            res = res[:-1] + ';'
+            self.output_field.text = res
+        except Exception as e:
+            self.output_field.text = f"Ошибка: {str(e)}"
 
     def generate_ivr_to_inc_query(self):
-        input_text = self.numbers_field.text.strip()
-        if not input_text:
-            return
-        context = self.context_field.text
-        prefix = self.prefix_field.text
-        numbers = self.numbers_field.text.splitlines()
+        try:
+            input_text = self.numbers_field.text.strip()
+            if not input_text:
+                return
+            context = self.context_field.text
+            prefix = self.prefix_field.text
+            numbers = self.numbers_field.text.splitlines()
 
-        res = ''
-        for number in numbers:
-            res += f"DELETE FROM extensions WHERE exten = '{number.strip()}' AND context = '{context}';"
-            res += f"INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
-            res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, incomming'),"
-            res += f"('{context}', '{number.strip()}', '2', 'Dial', 'SIP/mediacore/{prefix}${{{number.strip()}}}',60),"
-            res += f"('{context}', '{number.strip()}', '3', 'Hangup', '');"
-        self.output_field.text = res
+            res = ''
+            for number in numbers:
+                res += f"DELETE FROM extensions WHERE exten = '{number.strip()}' AND context = '{context}';"
+                res += f"INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
+                res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, incomming'),"
+                res += f"('{context}', '{number.strip()}', '2', 'Dial', 'SIP/mediacore/{prefix}${{{number.strip()}}}',60),"
+                res += f"('{context}', '{number.strip()}', '3', 'Hangup', '');"
+            self.output_field.text = res
+        except Exception as e:
+            self.output_field.text = f"Ошибка: {str(e)}"
 
     def generate_ivr_lv_query(self):
-        input_text = self.numbers_field.text.strip()
-        if not input_text:
-            return
-        context = self.context_field.text
-        client = self.client_field.text
-        ivr_file = self.ivr_field.text
-        numbers = self.numbers_field.text.splitlines()
+        try:
+            input_text = self.numbers_field.text.strip()
+            if not input_text:
+                return
+            context = self.context_field.text
+            client = self.client_field.text
+            ivr_file = self.ivr_field.text
+            numbers = self.numbers_field.text.splitlines()
 
-        res = "INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
-        for number in numbers:
-            res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, incomming for {client}'),"
-            res += f"('{context}', '{number.strip()}', '2', 'Answer', ''),"
-            res += f"('{context}', '{number.strip()}', '3', 'Wait', '1'),"
-            res += f"('{context}', '{number.strip()}', '4', 'Playback', '{ivr_file},skip'),"
-            res += f"('{context}', '{number.strip()}', '5', 'Hangup', ''),"
-        res = res[:-1] + ';'
-        self.output_field.text = res
+            res = "INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
+            for number in numbers:
+                res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, incomming for {client}'),"
+                res += f"('{context}', '{number.strip()}', '2', 'Answer', ''),"
+                res += f"('{context}', '{number.strip()}', '3', 'Wait', '1'),"
+                res += f"('{context}', '{number.strip()}', '4', 'Playback', '{ivr_file},skip'),"
+                res += f"('{context}', '{number.strip()}', '5', 'Hangup', ''),"
+            res = res[:-1] + ';'
+            self.output_field.text = res
+        except Exception as e:
+            self.output_field.text = f"Ошибка: {str(e)}"
 
     def generate_inc_query(self):
-        input_text = self.numbers_field.text.strip()
-        if not input_text:
-            return
-        context = self.context_field.text
-        client = self.client_field.text
-        prefix = self.prefix_field.text
-        numbers = self.numbers_field.text.splitlines()
+        try:
+            input_text = self.numbers_field.text.strip()
+            if not input_text:
+                return
+            context = self.context_field.text
+            client = self.client_field.text
+            prefix = self.prefix_field.text
+            numbers = self.numbers_field.text.splitlines()
 
-        res = "INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
-        for number in numbers:
-            res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, for {client}'),"
-            res += f"('{context}', '{number.strip()}', '2', 'Dial', 'SIP/mediacore/{prefix}${{{number.strip()}}}',60),"
-            res += f"('{context}', '{number.strip()}', '3', 'Hangup', ''),"
-        res = res[:-1] + ';'
-        self.output_field.text = res
+            res = "INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
+            for number in numbers:
+                res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, for {client}'),"
+                res += f"('{context}', '{number.strip()}', '2', 'Dial', 'SIP/mediacore/{prefix}${{{number.strip()}}}',60),"
+                res += f"('{context}', '{number.strip()}', '3', 'Hangup', ''),"
+            res = res[:-1] + ';'
+            self.output_field.text = res
+        except Exception as e:
+            self.output_field.text = f"Ошибка: {str(e)}"
 
     def generate_inc_to_ivr_query(self):
-        input_text = self.numbers_field.text.strip()
-        if not input_text:
-            return
-        context = self.context_field.text
-        ivr_file = self.ivr_field.text
-        numbers = self.numbers_field.text.splitlines()
+        try:
+            input_text = self.numbers_field.text.strip()
+            if not input_text:
+                return
+            context = self.context_field.text
+            ivr_file = self.ivr_field.text
+            numbers = self.numbers_field.text.splitlines()
 
-        res = ''
-        for number in numbers:
-            res += f"DELETE FROM extensions WHERE exten = '{number.strip()}' AND context = '{context}';"
-            res += f"INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
-            res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, incomming'),"
-            res += f"('{context}', '{number.strip()}', '2', 'Answer', ''),"
-            res += f"('{context}', '{number.strip()}', '3', 'Wait', '1'),"
-            res += f"('{context}', '{number.strip()}', '4', 'Playback', '{ivr_file},skip'),"
-            res += f"('{context}', '{number.strip()}', '5', 'Hangup', '');"
-        self.output_field.text = res
+            res = ''
+            for number in numbers:
+                res += f"DELETE FROM extensions WHERE exten = '{number.strip()}' AND context = '{context}';"
+                res += f"INSERT INTO extensions (context, exten, priority, app, appdata) VALUES"
+                res += f"('{context}', '{number.strip()}', '1', 'Log', 'NOTICE, incomming'),"
+                res += f"('{context}', '{number.strip()}', '2', 'Answer', ''),"
+                res += f"('{context}', '{number.strip()}', '3', 'Wait', '1'),"
+                res += f"('{context}', '{number.strip()}', '4', 'Playback', '{ivr_file},skip'),"
+                res += f"('{context}', '{number.strip()}', '5', 'Hangup', '');"
+            self.output_field.text = res
+        except Exception as e:
+            self.output_field.text = f"Ошибка: {str(e)}"
 
     def generate_del_query(self):
-        input_text = self.numbers_field.text.strip()
-        if not input_text:
-            return
-        context = self.context_field.text
-        numbers = self.numbers_field.text.splitlines()
+        try:
+            input_text = self.numbers_field.text.strip()
+            if not input_text:
+                return
+            context = self.context_field.text
+            numbers = self.numbers_field.text.splitlines()
 
-        res = ''
-        for number in numbers:
-            res += f"DELETE FROM extensions WHERE exten = '{number.strip()}' AND context = '{context}';"
-        self.output_field.text = res
+            res = ''
+            for number in numbers:
+                res += f"DELETE FROM extensions WHERE exten = '{number.strip()}' AND context = '{context}';"
+            self.output_field.text = res
+        except Exception as e:
+            self.output_field.text = f"Ошибка: {str(e)}"
 
     def switch_script(self, script_name):
         self.current_script = script_name

@@ -41,7 +41,7 @@ class AsterPage(Screen):
         self.add_widget(main_layout)
 
         self.title_label = MDLabel(
-            text="IVR",
+            text="INC",
             halign="left",
             size_hint_y=None,
             height="30dp"
