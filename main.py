@@ -10,7 +10,7 @@ class MainApp(MDApp):
         super().__init__(**kwargs)
         self.theme_cls.theme_style = "Dark"
         self.icon = os.path.join(os.path.dirname(__file__), "Kosou.png")
-        self.title = "Simple Scripts 0.2"
+        self.title = "Simple Scripts 0.3"
 
     def build(self):
         # Установка размера окна
