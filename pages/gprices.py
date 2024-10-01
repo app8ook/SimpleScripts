@@ -27,7 +27,7 @@ class GPricesPage(Screen):
             file_exists = os.path.isfile(output_file)
 
             # Читаем данные из файла Excel
-            df = pd.read_excel(self.input_file)
+            df = pd.read_excel(self.input_file, dtype=str)
 
             # Создаем список для хранения обработанных данных
             processed_data = []
@@ -36,29 +36,33 @@ class GPricesPage(Screen):
             for index, row in df.iterrows():
                 dest = row['DEST']
                 country_code = str(row['COUNTRY CODE'])
-                rollup = str(row['ROLLUP']) if pd.notna(row['ROLLUP']) else ''
-                rate = f"{float(row['RATE']):.4f}"
+                rollup = str(row['ROLLUP']) if pd.notna(row['ROLLUP']) else ''  # Проверка на NaN
+                rate = f"{float(row['RATE']):.4f}"  # Форматирование значения RATE с 4 знаками после запятой
 
+                # Проверяем, есть ли значения в ROLLUP
                 if rollup:
+                    # Разделяем значения по запятой и тире
                     rollup_values = []
                     for part in rollup.split(','):
                         part = part.strip()
-                        if '-' in part:
+                        if '-' in part:  # Обработка диапазонов
                             start_end = part.split('-')
                             if len(start_end) == 2 and all(x.strip().isdigit() for x in start_end):
                                 start, end = map(int, start_end)
                                 rollup_values.extend(range(start, end + 1))
-                        else:
-                            if part.isdigit():
+                        else:  # Обработка отдельных значений
+                            if part.isdigit():  # Проверка на целое число
                                 rollup_values.append(int(part))
 
+                    # Формируем строки с отдельными COUNTRY CODE и ROLLUP
                     for value in rollup_values:
-                        processed_data.append([dest, f"{country_code}{value}".replace('.0', ''), rate])
+                        processed_data.append([dest, country_code, value, rate])  # Добавляем отдельные значения
                 else:
-                    processed_data.append([dest, country_code.replace('.0', ''), rate])
+                    # Если ROLLUP пустой или NaN, добавляем строку без изменений (исключая комментарии и дату)
+                    processed_data.append([dest, country_code, '', rate])  # Пустое значение для ROLLUP
 
             # Создаем новый DataFrame из обработанных данных
-            processed_df = pd.DataFrame(processed_data, columns=['DEST', 'COUNTRY CODE', 'RATE'])
+            processed_df = pd.DataFrame(processed_data, columns=['DEST', 'COUNTRY CODE', 'ROLLUP', 'RATE'])
             
             # Добавляем столбцы MC, CI и FT с фиксированными значениями
             processed_df['MC'] = 1
