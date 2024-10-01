@@ -1,4 +1,4 @@
-import pandas as pd
+import openpyxl
 import os
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -27,17 +27,26 @@ class GPricesPage(Screen):
             file_exists = os.path.isfile(output_file)
 
             # Читаем данные из файла Excel
-            df = pd.read_excel(self.input_file, dtype=str)
+            wb_input = openpyxl.load_workbook(self.input_file)
+            ws_input = wb_input.active
 
-            # Создаем список для хранения обработанных данных
-            processed_data = []
+            # Создаем новый Workbook для выходного файла
+            wb_output = openpyxl.Workbook()
+            ws_output = wb_output.active
 
-            # Обрабатываем каждую строку в DataFrame
-            for index, row in df.iterrows():
-                dest = row['DEST']
-                country_code = str(row['COUNTRY CODE'])
-                rollup = str(row['ROLLUP']) if pd.notna(row['ROLLUP']) else ''  # Проверка на NaN
-                rate = f"{float(row['RATE']):.4f}"  # Форматирование значения RATE с 4 знаками после запятой
+            # Заголовки для выходного файла
+            headers = ['DEST', 'COUNTRY CODE', 'ROLLUP', 'RATE', 'MC', 'CI', 'FT']
+            ws_output.append(headers)
+
+            # Обрабатываем каждую строку в исходном файле
+            for row in ws_input.iter_rows(min_row=2, values_only=True):  # Пропускаем заголовок
+                dest = row[0]
+                country_code = str(row[1])  # Оставляем как строку
+                rollup = str(row[2]) if row[2] is not None else ''  # Проверка на None
+                rate = f"{float(row[3]):.4f}"  # Форматирование значения RATE с 4 знаками после запятой
+
+                # Создаем список для хранения обработанных данных
+                processed_data = []
 
                 # Проверяем, есть ли значения в ROLLUP
                 if rollup:
@@ -56,21 +65,32 @@ class GPricesPage(Screen):
 
                     # Формируем строки с отдельными COUNTRY CODE и ROLLUP
                     for value in rollup_values:
-                        processed_data.append([dest, country_code, value, rate])  # Добавляем отдельные значения
+                        processed_data.append([dest, country_code, value, rate, 1, 1, 0])  # Добавляем значение ROLLUP
+
                 else:
-                    # Если ROLLUP пустой или NaN, добавляем строку без изменений (исключая комментарии и дату)
-                    processed_data.append([dest, country_code, '', rate])  # Пустое значение для ROLLUP
+                    # Если ROLLUP пустой или None, добавляем строку без изменений (исключая комментарии и дату)
+                    processed_data.append([dest, country_code, '', rate, 1, 1, 0])  # Пустое значение для ROLLUP
 
-            # Создаем новый DataFrame из обработанных данных
-            processed_df = pd.DataFrame(processed_data, columns=['DEST', 'COUNTRY CODE', 'ROLLUP', 'RATE'])
-            
-            # Добавляем столбцы MC, CI и FT с фиксированными значениями
-            processed_df['MC'] = 1
-            processed_df['CI'] = 1
-            processed_df['FT'] = 0
+                # Записываем обработанные данные в выходной файл с проверкой на ведущие нули
+                for data_row in processed_data:
+                    dest_val, country_code_val, rollup_val, rate_val, mc_val, ci_val, ft_val = data_row
+                    
+                    # Преобразуем значение ROLLUP в строку и проверяем наличие ведущих нулей
+                    if isinstance(rollup_val, int):
+                        rollup_val_str = str(rollup_val)
+                        original_rollups = [part.strip() for part in rollup.split(',')]
+                        if any(r.lstrip('0') == rollup_val_str for r in original_rollups):
+                            rollup_val_str = str(rollup_val)  # Сохраняем без добавления нуля
+                        else:
+                            rollup_val_str = str(rollup_val).zfill(2)  # Добавляем ведущий ноль если нужно
+                    else:
+                        rollup_val_str = ''
 
-            # Записываем обработанные данные в новый Excel файл
-            processed_df.to_excel(output_file, index=False)
+                    ws_output.append([dest_val, country_code_val, rollup_val_str, rate_val, mc_val, ci_val, ft_val])
+
+            # Сохраняем выходной файл
+            wb_output.save(output_file)
+
             self.label.text += f"\nГотово. Файл сохранен как: {output_file}"
             if file_exists:
                 self.label.text += f"\nФайл {output_file} был перезаписан."
