@@ -70,6 +70,24 @@
          </item>
          <item>
 
+          <widget class="QPushButton" name="pushButton_12">
+           <property name="text">
+            <string>Вычисления с процентами</string>
+           </property>
+          </widget>
+
+         </item>
+         <item>
+
+          <widget class="QPushButton" name="pushButton_13">
+           <property name="text">
+            <string>Конвертация валют</string>
+           </property>
+          </widget>
+
+         </item>
+         <item>
+
           <widget class="QPushButton" name="pushButton_4">
            <property name="text">
             <string>Формирование номеров для Aster</string>
@@ -82,6 +100,15 @@
           <widget class="QPushButton" name="pushButton_5">
            <property name="text">
             <string>Форматирование списаний по номерам</string>
+           </property>
+          </widget>
+
+         </item>
+         <item>
+
+          <widget class="QPushButton" name="pushButton_11">
+           <property name="text">
+            <string>Суммирование выгрузок по точкам</string>
            </property>
           </widget>
 

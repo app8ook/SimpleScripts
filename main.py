@@ -13,13 +13,15 @@ from scripts.beeline import BeelineWidget
 from scripts.operators import OperatorWidget
 from scripts.countrycode import CountryCodeWidget
 from scripts.about import AboutWidget
+from scripts.summtraff import SummTraffWidget
+from scripts.percent import PercentWidget
+from scripts.currency import CurrencyWidget
 
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
-
     return os.path.join(base_path, relative_path)
 
 STYLE_FILE = resource_path("style.qss")
@@ -36,9 +38,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.category_buttons = {
             'Скрипт1': self.pushButton_1, 
             'Скрипт2': self.pushButton_2, 
-            'Скрипт3': self.pushButton_3, 
+            'Скрипт3': self.pushButton_3,
+            'Скрипт12': self.pushButton_12,
+            'Скрипт13': self.pushButton_13,
             'Скрипт4': self.pushButton_4, 
             'Скрипт5': self.pushButton_5, 
+            'Скрипт11': self.pushButton_11,
             'Скрипт6': self.pushButton_6, 
             'Скрипт7': self.pushButton_7,
             'Скрипт8': self.pushButton_8,
@@ -67,6 +72,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.script_container.addWidget(self.script3_widget)
         self.script3_widget.back_button.clicked.connect(self.show_main_menu)
 
+        self.script12_widget = PercentWidget()
+        self.script_container.addWidget(self.script12_widget)
+        self.script12_widget.back_button.clicked.connect(self.show_main_menu)
+
+        self.script13_widget = CurrencyWidget()
+        self.script_container.addWidget(self.script13_widget)
+        self.script13_widget.back_button.clicked.connect(self.show_main_menu)
+
         self.script4_widget = AsterWidget()
         self.script_container.addWidget(self.script4_widget)
         self.script4_widget.back_button.clicked.connect(self.show_main_menu)
@@ -74,6 +87,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.script5_widget = NumWidget()
         self.script_container.addWidget(self.script5_widget)
         self.script5_widget.back_button.clicked.connect(self.show_main_menu)
+
+        self.script11_widget = SummTraffWidget()
+        self.script_container.addWidget(self.script11_widget)
+        self.script11_widget.back_button.clicked.connect(self.show_main_menu)
 
         self.script6_widget = MysqlWidget()
         self.script_container.addWidget(self.script6_widget)
@@ -111,7 +128,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         footer_layout = QHBoxLayout()
         footer_layout.addStretch()
-        footer_layout.addWidget(QLabel("Версия: 0.4"))
+        footer_layout.addWidget(QLabel("Версия: 0.5"))
         footer_layout.addStretch()
 
         main_layout.addLayout(footer_layout)

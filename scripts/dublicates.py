@@ -10,6 +10,7 @@ class DuplicatesWidget(QWidget):
         main_layout.addWidget(self.input_label)
         main_layout.setSpacing(10)
         self.input_text = QTextEdit()
+        self.input_text.setAcceptRichText(False)
         main_layout.addWidget(self.input_text)
 
         self.output_label = QLabel("Вывод:")

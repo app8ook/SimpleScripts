@@ -41,6 +41,7 @@ class NumWidget(QWidget):
 
         # Поле ввода
         self.input_field = QTextEdit()
+        self.input_field.setAcceptRichText(False)
         self.input_field.setPlaceholderText("Введите текст")
         main_layout.addWidget(self.input_field)
 

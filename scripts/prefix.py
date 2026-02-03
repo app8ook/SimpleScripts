@@ -37,6 +37,7 @@ class PrefixWidget(QWidget):
         main_layout.addWidget(self.input_label)
 
         self.input_field = QTextEdit()
+        self.input_field.setAcceptRichText(False)
         self.input_field.setPlaceholderText("Введите текст")
         main_layout.addWidget(self.input_field)
 
@@ -44,6 +45,7 @@ class PrefixWidget(QWidget):
         main_layout.addWidget(self.prefix_label)
 
         self.prefix_field = QTextEdit()
+        self.prefix_field.setAcceptRichText(False)
         self.prefix_field.setFixedHeight(40)
         self.prefix_field.setPlaceholderText("Введите префикс")
         main_layout.addWidget(self.prefix_field)

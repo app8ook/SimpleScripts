@@ -37,6 +37,7 @@ class DoubledataWidget(QWidget):
         main_layout.addWidget(self.input_label)
 
         self.input_field = QTextEdit()
+        self.input_field.setAcceptRichText(False)
         self.input_field.setPlaceholderText("Введите текст")
         main_layout.addWidget(self.input_field)
 
@@ -44,6 +45,7 @@ class DoubledataWidget(QWidget):
         main_layout.addWidget(self.input_label2)
 
         self.input_field2 = QTextEdit()
+        self.input_field2.setAcceptRichText(False)
         self.input_field2.setPlaceholderText("Введите фильтр")
         self.input_field2.setFixedHeight(80)  # Можно настроить высоту
         main_layout.addWidget(self.input_field2)

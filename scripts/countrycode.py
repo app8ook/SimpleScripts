@@ -237,6 +237,7 @@ class CountryCodeWidget(QWidget):
 
         main_layout.addWidget(QLabel("Введите номера (по одному в строке):"))
         self.numbers_input = QTextEdit()
+        self.numbers_input.setAcceptRichText(False)
         main_layout.addWidget(self.numbers_input, 1)
 
         main_layout.addWidget(QLabel("Результат:"))

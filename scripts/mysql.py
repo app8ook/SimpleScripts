@@ -97,6 +97,7 @@ class MysqlWidget(QWidget):
         main_layout.addWidget(self.numbers_label)
 
         self.numbers_field = QTextEdit()
+        self.numbers_field.setAcceptRichText(False)
         self.numbers_field.setPlaceholderText("Введите номера через новую строку")
         main_layout.addWidget(self.numbers_field)
 
