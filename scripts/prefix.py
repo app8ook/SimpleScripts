@@ -15,6 +15,10 @@ class PrefixWidget(QWidget):
             "prefdel": {
                 "title": "PREFDEL",
                 "process_function": self.prefdel
+            },
+            "prefadd": {
+                "title": "PREFADD",
+                "process_function": self.prefadd
             }
         }
         self.current_script = "prefiltr"
@@ -82,11 +86,16 @@ class PrefixWidget(QWidget):
         self.prefdel_button.clicked.connect(lambda: self.switch_script("prefdel"))
         button_layout.addWidget(self.prefdel_button)
 
+        self.prefadd_button = QPushButton("PREFADD")
+        self.prefadd_button.clicked.connect(lambda: self.switch_script("prefadd"))
+        button_layout.addWidget(self.prefadd_button)
+
         self.update_script_buttons()
 
     def update_script_buttons(self):
         self.prefiltr_button.setEnabled(self.current_script != "prefiltr")
         self.prefdel_button.setEnabled(self.current_script != "prefdel")
+        self.prefadd_button.setEnabled(self.current_script != "prefadd")
 
     def switch_script(self, script_name):
         if script_name not in self.scripts:
@@ -117,14 +126,22 @@ class PrefixWidget(QWidget):
         output_text += f"\nКоличество удаленных строк с указанным префиксом: {removed_count}"
         return output_text
 
+    def prefadd(self, input_text, prefix):
+        lines = input_text.splitlines()
+        modified_lines = [prefix + line for line in lines]
+        output_text = "\n".join(modified_lines)
+        output_text += f"\n\nКоличество обработанных строк: {len(modified_lines)}"
+        return output_text
+
     def process_text(self):
         input_text = self.input_field.toPlainText().strip()
         prefix = self.prefix_field.toPlainText()
         if not input_text:
             self.output_field.setPlainText("Пожалуйста, введите текст для обработки.")
             return
-        if prefix == "":
+        if prefix == "" and self.current_script != "prefadd":
             self.output_field.setPlainText("Пожалуйста, введите префикс.")
             return
+            
         output_text = self.scripts[self.current_script]["process_function"](input_text, prefix)
         self.output_field.setPlainText(output_text)

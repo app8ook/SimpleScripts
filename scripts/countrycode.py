@@ -28,7 +28,7 @@ class CountryCodeWidget(QWidget):
             ("Барбадос	Barbados", "1246"),
             ("Бахрейн	Bahrain", "973"),
             ("Белиз	Belize", "501"),
-            ("Белоруссия	Belarus", "375"),
+            ("Белорусь	Belarus", "375"),
             ("Бельгия	Belgium", "32"),
             ("Бенин	Benin", "229"),
             ("Болгария	Bulgaria", "359"),

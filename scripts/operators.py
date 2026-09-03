@@ -86,7 +86,7 @@ class OperatorWidget(QWidget):
         self.codes_preview = QTextEdit()
         self.codes_preview.setReadOnly(True)
         self.codes_preview.setPlaceholderText(
-            "Пример данных из файла кодов"
+            "Пример данных из файла кодов\n"
             "Билайн | 7903 | \n"
             "Билайн | 7909 | \n"
             "МегаФон | 7937 | \n"
@@ -101,7 +101,7 @@ class OperatorWidget(QWidget):
         self.log_output = QTextEdit()
         self.log_output.setReadOnly(True)
         self.log_output.setPlaceholderText(
-            "Пример обработанных данных"
+            "Пример обработанных данных\n"
             "Билайн — 2\n"
             "МТС — 1\n"
             "МегаФон — 1\n"
