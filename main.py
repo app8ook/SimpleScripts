@@ -6,16 +6,14 @@ from PyQt5.QtWidgets import QStackedWidget, QHBoxLayout, QLabel, QPushButton, QW
 from scripts.dublicates import DuplicatesWidget
 from scripts.doubledata import DoubledataWidget
 from scripts.prefix import PrefixWidget
-from scripts.aster import AsterWidget
-from scripts.numbers import NumWidget
-from scripts.mysql import MysqlWidget
-from scripts.beeline import BeelineWidget
+from scripts.numgenerator import GeneratorWidget
+from scripts.currency import CurrencyWidget
+from scripts.extractor import ExtractorWidget
+from scripts.percent import PercentWidget
 from scripts.operators import OperatorWidget
 from scripts.countrycode import CountryCodeWidget
+from scripts.countrynetwork import CountryNetwork
 from scripts.about import AboutWidget
-from scripts.summtraff import SummTraffWidget
-from scripts.percent import PercentWidget
-from scripts.currency import CurrencyWidget
 
 def resource_path(relative_path):
     try:
@@ -36,19 +34,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setMinimumSize(600, 600)
 
         self.category_buttons = {
-            'Скрипт1': self.pushButton_1, 
-            'Скрипт2': self.pushButton_2, 
+            'Скрипт1': self.pushButton_1,
+            'Скрипт2': self.pushButton_2,
             'Скрипт3': self.pushButton_3,
-            'Скрипт12': self.pushButton_12,
-            'Скрипт13': self.pushButton_13,
-            'Скрипт4': self.pushButton_4, 
-            'Скрипт5': self.pushButton_5, 
-            'Скрипт11': self.pushButton_11,
-            'Скрипт6': self.pushButton_6, 
+            'Скрипт4': self.pushButton_4,
+            'Скрипт5': self.pushButton_5,
+            'Скрипт6': self.pushButton_6,
             'Скрипт7': self.pushButton_7,
             'Скрипт8': self.pushButton_8,
+            'Скрипт9': self.pushButton_9,
             'Скрипт10': self.pushButton_10,
-            'Скрипт9': self.pushButton_9
+            'Скрипт20': self.pushButton_20
         }
 
         self.category_group = QtWidgets.QButtonGroup()
@@ -72,31 +68,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.script_container.addWidget(self.script3_widget)
         self.script3_widget.back_button.clicked.connect(self.show_main_menu)
 
-        self.script12_widget = PercentWidget()
-        self.script_container.addWidget(self.script12_widget)
-        self.script12_widget.back_button.clicked.connect(self.show_main_menu)
-
-        self.script13_widget = CurrencyWidget()
-        self.script_container.addWidget(self.script13_widget)
-        self.script13_widget.back_button.clicked.connect(self.show_main_menu)
-
-        self.script4_widget = AsterWidget()
+        self.script4_widget = GeneratorWidget()
         self.script_container.addWidget(self.script4_widget)
         self.script4_widget.back_button.clicked.connect(self.show_main_menu)
-        
-        self.script5_widget = NumWidget()
+
+        self.script5_widget = CurrencyWidget()
         self.script_container.addWidget(self.script5_widget)
         self.script5_widget.back_button.clicked.connect(self.show_main_menu)
 
-        self.script11_widget = SummTraffWidget()
-        self.script_container.addWidget(self.script11_widget)
-        self.script11_widget.back_button.clicked.connect(self.show_main_menu)
-
-        self.script6_widget = MysqlWidget()
+        self.script6_widget = ExtractorWidget()
         self.script_container.addWidget(self.script6_widget)
         self.script6_widget.back_button.clicked.connect(self.show_main_menu)
 
-        self.script7_widget = BeelineWidget()
+        self.script7_widget = PercentWidget()
         self.script_container.addWidget(self.script7_widget)
         self.script7_widget.back_button.clicked.connect(self.show_main_menu)
 
@@ -104,13 +88,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.script_container.addWidget(self.script8_widget)
         self.script8_widget.back_button.clicked.connect(self.show_main_menu)
 
-        self.script10_widget = CountryCodeWidget()
+        self.script9_widget = CountryCodeWidget()
+        self.script_container.addWidget(self.script9_widget)
+        self.script9_widget.back_button.clicked.connect(self.show_main_menu)
+
+        self.script10_widget = CountryNetwork()
         self.script_container.addWidget(self.script10_widget)
         self.script10_widget.back_button.clicked.connect(self.show_main_menu)
 
-        self.script9_widget = AboutWidget()
-        self.script_container.addWidget(self.script9_widget)
-        self.script9_widget.back_button.clicked.connect(self.show_main_menu)
+        self.script20_widget = AboutWidget()
+        self.script_container.addWidget(self.script20_widget)
+        self.script20_widget.back_button.clicked.connect(self.show_main_menu)
 
         self.show_main_menu()
 
@@ -128,7 +116,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         footer_layout = QHBoxLayout()
         footer_layout.addStretch()
-        footer_layout.addWidget(QLabel("Версия: 0.5"))
+        footer_layout.addWidget(QLabel("Версия: 0.6"))
         footer_layout.addStretch()
 
         main_layout.addLayout(footer_layout)
@@ -161,3 +149,5 @@ if __name__ == '__main__':
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
+
+#pyinstaller --noconsole --onefile --icon="Kosou.ico" --add-data "interface.ui;." --add-data "style.qss;." --add-data "Kosou.ico;." main.py

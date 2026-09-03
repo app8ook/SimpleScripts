@@ -42,121 +42,91 @@
          </property>
 
          <item>
-
           <widget class="QPushButton" name="pushButton_1">
            <property name="text">
             <string>Удаление дубликатов</string>
            </property>
           </widget>
-
          </item>
-         <item>
 
+         <item>
           <widget class="QPushButton" name="pushButton_2">
            <property name="text">
             <string>Фильтрация двух пачек данных</string>
            </property>
           </widget>
-
          </item>
-         <item>
 
+         <item>
           <widget class="QPushButton" name="pushButton_3">
            <property name="text">
             <string>Работа с префиксами</string>
            </property>
           </widget>
-
          </item>
-         <item>
 
-          <widget class="QPushButton" name="pushButton_12">
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
            <property name="text">
-            <string>Вычисления с процентами</string>
+            <string>Генератор номеров по шаблону</string>
            </property>
           </widget>
-
          </item>
-         <item>
 
-          <widget class="QPushButton" name="pushButton_13">
+         <item>
+          <widget class="QPushButton" name="pushButton_5">
            <property name="text">
             <string>Конвертация валют</string>
            </property>
           </widget>
-
          </item>
+
          <item>
-
-          <widget class="QPushButton" name="pushButton_4">
-           <property name="text">
-            <string>Формирование номеров для Aster</string>
-           </property>
-          </widget>
-
-         </item>
-         <item>
-
-          <widget class="QPushButton" name="pushButton_5">
-           <property name="text">
-            <string>Форматирование списаний по номерам</string>
-           </property>
-          </widget>
-
-         </item>
-         <item>
-
-          <widget class="QPushButton" name="pushButton_11">
-           <property name="text">
-            <string>Суммирование выгрузок по точкам</string>
-           </property>
-          </widget>
-
-         </item>
-         <item>
-
           <widget class="QPushButton" name="pushButton_6">
            <property name="text">
-            <string>Формирование MYSQL запросов для номеров</string>
+            <string>Экстрактор почт/ссылок</string>
            </property>
           </widget>
-
          </item>
-         <item>
 
+         <item>
           <widget class="QPushButton" name="pushButton_7">
            <property name="text">
-            <string>Обработка прайсов Билайн</string>
+            <string>Вычисления с процентами</string>
            </property>
           </widget>
-
          </item>
-         <item>
 
+         <item>
           <widget class="QPushButton" name="pushButton_8">
            <property name="text">
             <string>Разделение номеров по операторам (подкодам сетей)</string>
            </property>
           </widget>
-
          </item>
-         <item>
 
-          <widget class="QPushButton" name="pushButton_10">
+         <item>
+          <widget class="QPushButton" name="pushButton_9">
            <property name="text">
             <string>Коды стран (Обработка массы номеров и быстрый поиск)</string>
            </property>
           </widget>
-
          </item>
-         <item>
 
-          <widget class="QPushButton" name="pushButton_9">
+         <item>
+          <widget class="QPushButton" name="pushButton_10">
+           <property name="text">
+            <string>Подробная информация по номерам (Сети, MCC, MNC, ISO)</string>
+           </property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QPushButton" name="pushButton_20">
            <property name="text">
             <string>О программе</string>
            </property>
           </widget>
-
          </item>
          
         </layout>
@@ -164,7 +134,7 @@
       </layout>
      </widget>
     </item>
-    <!-- Здесь программно добавляйте QStackedWidget для скриптов -->
+
    </layout>
   </widget>
  </widget>
